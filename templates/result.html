@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cardio Monitor - Results</title>
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-md navbar-custom">
+      <div class="container">
+          <a class="navbar-brand" href="{{ url_for('home') }}">
+              <img src="{{ url_for('static', filename='heartlogo.png') }}" alt="Logo"/>
+              Cardio Monitor
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+              <i class="fa fa-bars" style="color: var(--primary-dark);"></i>
+          </button>
+          
+          <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                      <a class="nav-link" href="{{ url_for('about') }}">Learn About Heart Disease</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </nav>
+
+  <div class="container py-5 animate-fade-in">
+      <div class="row pt-2 pb-4 text-center">
+          <div class="col-12">
+              <h1 class="page-title">Assessment Results</h1>
+              <p class="text-muted mt-2">Prepared for <strong>{{nameofpatient}}</strong></p>
+          </div>
+      </div>
+
+      <div class="row justify-content-center">
+          <div class="col-lg-10">
+              
+              {% if prediction == 1 %}
+              <div class="glass-container result-status-card status-safe delay-1">
+                  <div class="mb-3">
+                      <i class="fa fa-shield fa-4x" style="color: #15803d;"></i>
+                  </div>
+                  <h2 class="mb-3">Low Risk Detected</h2>
+                  <p class="lead">
+                      Great news! The model analysis shows very <strong>low chances</strong> of developing cardiovascular disease based on your current metrics. 
+                  </p>
+                  <a href="{{ url_for('about') }}" class="btn btn-outline-success mt-3" style="border-radius: 8px;">Learn how to maintain a healthy heart</a>
+              </div>
+              {% elif prediction == 0 %}
+              <div class="glass-container result-status-card status-danger delay-1">
+                  <div class="mb-3">
+                      <i class="fa fa-exclamation-triangle fa-4x" style="color: #b91c1c;"></i>
+                  </div>
+                  <h2 class="mb-3">High Risk Detected</h2>
+                  <p class="lead">
+                      Unfortunately, the model analysis indicates a <strong>high risk</strong> of heart disease. Please contact a healthcare professional or doctor immediately for a formal evaluation.
+                  </p>
+                  <a href="{{ url_for('about') }}" class="btn btn-outline-danger mt-3" style="border-radius: 8px;">Learn more about Cardiovascular risks</a>
+              </div>
+              {% endif %}
+
+              <div class="glass-container delay-2 mt-5">
+                  <h3 class="mb-4 text-center" style="color: var(--primary-dark);">Your Data vs. Average Normals</h3>
+                  <div class="row">
+                      <div class="col-md-6 mb-4">
+                          <div class="glass-card h-100 d-flex flex-column align-items-center justify-content-center">
+                              <img src="{{url_for('static', filename='plotng.png')}}" alt="Metrics Graph 1" class="img-fluid rounded" style="box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                          </div>
+                      </div>
+                      <div class="col-md-6 mb-4">
+                          <div class="glass-card h-100 d-flex flex-column align-items-center justify-content-center">
+                              <img src="{{url_for('static', filename='plotng2.png')}}" alt="Metrics Graph 2" class="img-fluid rounded" style="box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="alert mt-4" style="background-color: #f8fafc; border-left: 4px solid var(--accent); color: var(--text-muted); font-size: 0.9rem;">
+                      <i class="fa fa-info-circle mr-2" style="color: var(--accent);"></i>
+                      <strong>Caution:</strong> This is an AI-generated prediction and does not substitute professional medical advice. Kindly see a doctor if you feel symptoms persist.
+                  </div>
+              </div>
+
+          </div>
+      </div>
+      
+  </div>
+</body>
+</html>
