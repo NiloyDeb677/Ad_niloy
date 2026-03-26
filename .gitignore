@@ -11,6 +11,3 @@ env.bak/
 venv.bak/
 .pytest_cache/
 .DS_Store
-Heart_Model.pkl
-heartmodel.pkl
-Heart_model1.pkl
